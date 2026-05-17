@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gresources>
+    <gresource prefix="/com/nucleo/app">
+        <file>todo_ui.glade</file>
+        <file>assets/add.png</file>
+        <file>assets/delete.png</file>
+        <file>assets/unselect.png</file>
+        <file>assets/update.png</file>
+    </gresource>
+</gresources>

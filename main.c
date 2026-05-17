@@ -99,19 +99,24 @@ GtkBuilder  * builder;
 
 int main(int argc , char * argv []){
 
-    
+   
     gtk_init(&argc,&argv);
 
-    builder = gtk_builder_new_from_file("todo_ui.glade");
     
+
+    builder = gtk_builder_new_from_resource("/com/nucleo/app/todo_ui.glade"); 
+    
+    // for normal system test we will use  todo_ui.glade but for release this  char * path =g_build_filename(getenv("APPDIR"),"usr/share/todo_ui.glade");
+    // will be utilized
     
     Main_window =GTK_WIDGET(gtk_builder_get_object(builder,"Main_window"));
     
     g_signal_connect(Main_window,"destroy",G_CALLBACK(gtk_main_quit),NULL);
     
 
-    
-    
+    // gtk_builder_add_callback_symbol(builder,"on_data_entry_close",G_CALLBACK(on_data_entry_close));
+    // gtk_builder_add_callback_symbol(builder,"on_data_entry_response",G_CALLBACK(on_data_entry_response));
+    // gtk_builder_add_callback_symbol(builder,"on_dialog_submit_update_clicked",G_CALLBACK(on_dialog_submit_update_clicked));
     
     gtk_builder_connect_signals(builder,NULL);
 
@@ -193,7 +198,7 @@ void on_add_todo_button_clicked(GtkButton * button, gpointer user_data){
 
     //g_print(" Add todo button clicked \n");
 
-    gtk_window_set_decorated(GTK_DIALOG(data_entry),FALSE);
+    gtk_window_set_decorated(GTK_WINDOW(data_entry),FALSE);
     gtk_window_maximize(GTK_WINDOW(Main_window));
     set_form();
     gtk_widget_show(GTK_WIDGET(data_entry));
@@ -223,8 +228,8 @@ void on_dialog_submit_clicked(GtkButton * button, gpointer user_data){
 
 
 
-    const gchar * Task =gtk_entry_get_text(task_name);
-    const gchar * Task_Description =gtk_entry_get_text(task_description);
+    const gchar * Task =gtk_entry_get_text(GTK_ENTRY(task_name));
+    const gchar * Task_Description =gtk_entry_get_text(GTK_ENTRY(task_description));
 
     int hours =gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(time_hour));
     int minutes =gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(time_minutes));
@@ -277,7 +282,6 @@ void on_dialog_submit_clicked(GtkButton * button, gpointer user_data){
  
 
 
-  g_free(day_or_night);
 
     //g_print(" Task             : %s \n",Task);
     //g_print(" Task Description : %s \n",Task_Descriptigpon);
@@ -376,7 +380,7 @@ void on_update_todo_button_clicked(GtkButton * button, gpointer user_data){
 
          
 
-        gtk_window_set_decorated(GTK_DIALOG(data_entry),FALSE);
+        gtk_window_set_decorated(GTK_WINDOW(data_entry),FALSE);
         gtk_tree_model_get(model,&iter,TASK
         ,&task,TASK_DESCRIPTION,&task_description_data,CREATED_DATE,&created,DEADLINE_DATE,&deadline,-1);
         custom_set_form(task,task_description_data,deadline);
@@ -402,7 +406,7 @@ void custom_set_form(gchar * task,gchar * task_description_data,gchar * deadline
     int hours,minutes,seconds;
     char time_period[3];
 
-    int result =sscanf(deadline,"%d.%d.%d %d:%d:%d %2s",&day,&month,&year,&hours,&minutes,&seconds,&time_period);
+    int result =sscanf(deadline,"%d.%d.%d %d:%d:%d %2s",&day,&month,&year,&hours,&minutes,&seconds,time_period);
 
 
 

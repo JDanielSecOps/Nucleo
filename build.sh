@@ -6,9 +6,9 @@ unset GTK_PATH
 #; 
 
 
-if gcc -rdynamic -g main.c -o "Todo App" $(pkg-config --cflags --libs gtk+-3.0); then
+if gcc -rdynamic -g main.c resources.c -o "Todo-App" $(pkg-config --cflags --libs gtk+-3.0); then
 
-    ./'Todo App'
+    ./'Nucleo'
     echo "Build Successful"
 
 else
