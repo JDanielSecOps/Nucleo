@@ -54,8 +54,8 @@ and GTK for the user interface layer
 
 
 ## Contributions
-    
-    For contributions,features or issues kindly open a pull request or issue
+
+For contributions,features or issues kindly open a pull request or issue
 
 
 
