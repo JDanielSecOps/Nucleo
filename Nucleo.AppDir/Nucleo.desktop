@@ -1,6 +1,6 @@
 [Desktop Entry]
 Name=Nucleo
-Exec=Todo-App
-Icon=atom
+Exec=Nucleo
+Icon=Nucleo
 Type=Application
-Categories=Utility
+Categories=Utility;
