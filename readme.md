@@ -53,6 +53,25 @@ and GTK for the user interface layer
 <img width="1379" height="871" alt="Nucleo UI" src="https://github.com/user-attachments/assets/b8faefd3-fcbd-404b-b960-08d8984ce903" />
 
 
+## Installation
+
+Note : I strongly suggest that you install the AppImageLauncher to set Nucleo up properly especially
+       when adding Nucleo to the desktop or search menu however you dont need it to simply run the program 
+       
+For the AppImageLauncher installation kindly refer their 
+<a href="https://github.com/TheAssassin/AppImageLauncher">documentation</a>  
+
+1. Download the AppImage from the <a href="https://github.com/JDanielSecOps/Nucleo/tags">Release</a>
+
+2. Open a terminal and run the following commands to get Nucleo up and running
+
+``` text
+
+    chmod +x Nucleo-x86_64.AppImage
+    ./Nucleo-x86_64.AppImage
+```
+
+
 ## Contributions
 
 For contributions,features or issues kindly open a pull request or issue
