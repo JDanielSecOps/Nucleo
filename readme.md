@@ -5,7 +5,7 @@
 
 ## Details
 
-Nucleo is a minimalistic todo application built for linux platforms built with C for its core functionalities
+Nucleo is a minimalistic todo application for linux platforms built with C for its core functionalities
 and GTK for the user interface layer 
 
 ## Tech Stack 
