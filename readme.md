@@ -1,5 +1,9 @@
 
 
+<p>
+<img width="256" height="256" alt="image" src="https://github.com/user-attachments/assets/3b35d066-1f11-4c13-ae11-8f73722d5c96" />
+</p>
+
 # Nucleo 
 
 
