@@ -35,11 +35,12 @@ void on_dialog_submit_clicked(GtkButton * button, gpointer user_data);
 void on_dialog_submit_update_clicked(GtkButton * button, gpointer user_data);
 
 void set_form();
-void custom_set_form();
+void custom_set_form(gchar * task,gchar * task_description_data,gchar * deadline);
 void on_completed_renderer_toggled(GtkCellRendererToggle * cell_renderer,gchar * path_str);
 static gboolean on_delete_dialog(GtkWidget * widget , GdkEvent * event);
 
-
+bool is_deadline_above_created_date(char * deadline_date , char * created_date);
+void hour12_to_hour24(int * hour,char * period);
 
 void file_read();
 void file_write();
@@ -250,6 +251,13 @@ void on_dialog_submit_clicked(GtkButton * button, gpointer user_data){
     hours,minutes,seconds,day_or_night
     );
 
+   
+    if(is_deadline_above_created_date(deadline,created)){
+
+        
+        snprintf(deadline,sizeof(deadline),"");
+    }
+
     if(gtk_tree_selection_get_selected(selection,&model,&iter)){
 
 
@@ -319,6 +327,102 @@ static gboolean on_delete_dialog(GtkWidget * widget , GdkEvent * event){
     
     gtk_widget_hide(GTK_WIDGET(data_entry));
     return TRUE;
+}
+
+bool is_deadline_above_created_date(char *deadline_timestamp, char *created_timestamp)
+{
+    
+
+    if(strlen(deadline_timestamp)==0){
+        return false;
+    }
+
+    int created_hour;
+    int created_minute;
+    int created_second;
+    
+    int created_year;
+    int created_month;
+    int created_day;
+
+    char created_period[4];
+
+
+
+    int deadline_hour;
+    int deadline_minute;
+    int deadline_second;
+    
+    int deadline_year;
+    int deadline_month;
+    int deadline_day;
+
+    char deadline_period[4];
+
+
+    sscanf(created_timestamp,"%d.%d.%d %d:%d:%d %3s",&created_day,&created_month,&created_year,
+    &created_hour,&created_minute,&created_second,created_period);
+    sscanf(deadline_timestamp,"%d.%d.%d %d:%d:%d %3s",&deadline_day,&deadline_month,&deadline_year,
+    &deadline_hour,&deadline_minute,&deadline_second,deadline_period);
+    
+
+    hour12_to_hour24(&deadline_hour,deadline_period);
+    hour12_to_hour24(&created_hour,created_period);
+
+    struct tm created_time={0};
+    struct tm deadline_time={0};
+
+
+    created_time.tm_hour=created_hour;
+    created_time.tm_min=created_minute;
+    created_time.tm_sec=created_second;
+
+    created_time.tm_mday=created_day;
+    created_time.tm_mon=created_month -1;
+    created_time.tm_year=created_year-1900;
+    created_time.tm_isdst=-1;
+
+
+
+    deadline_time.tm_hour=deadline_hour;
+    deadline_time.tm_min=deadline_minute;
+    deadline_time.tm_sec=deadline_second;
+
+    deadline_time.tm_mday=deadline_day; 
+    deadline_time.tm_mon=deadline_month -1;
+    deadline_time.tm_year=deadline_year-1900;
+    deadline_time.tm_isdst=-1;
+    
+    time_t created_long =mktime(&created_time);
+    time_t deadline_long =mktime(&deadline_time);
+
+    const double result = difftime(deadline_long,created_long);
+    
+   
+
+    if(result ==0.0 || result < 0.0){
+
+        return true;
+
+    }else{
+
+        return false;
+    }
+
+}
+
+void hour12_to_hour24(int * hour,char * period){
+
+    if(strcmp("am",period) == 0 && *hour == 12){
+
+        *hour=0;
+
+    }else if(strcmp("pm",period) == 0  &&  *hour != 12){
+
+        *hour+=12;
+
+    }
+
 }
 
 void on_completed_renderer_toggled(GtkCellRendererToggle * cell_renderer,gchar * path_str){
@@ -584,3 +688,5 @@ void file_read(){
     fclose(fptr);
 
 }   
+
+

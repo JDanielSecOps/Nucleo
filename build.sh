@@ -6,6 +6,8 @@ unset GTK_PATH
 #; 
 
 
+glib-compile-resources resources.gresource.xml --target=resources.c --generate-source
+
 if gcc -rdynamic -g main.c resources.c -o "Todo-App" $(pkg-config --cflags --libs gtk+-3.0); then
 
     ./'Nucleo'
